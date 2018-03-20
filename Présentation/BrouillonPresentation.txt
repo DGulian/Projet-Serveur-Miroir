@@ -25,3 +25,12 @@ Passage Mercredi 28 a 15h
 	
 	Today, our servers run properly, they are monitored and supervised by our CentreonOS. 
 	at last, I have got a last errors on the server that makes association with client by command prompt impossible.
+	It possible to download graphically some packet thanks to our web server on our server mirror [192.168.30.30 -- 192.168.30.91]
+
+(d)Conclusion/Summary
+--> condense your result and implications
+	
+	Thanks to this project we could express our skills and habilities acquired during 2 years at the IUT.
+	Networks management, Network supervision, building up server, and Moniroting.
+	Nowaday we can update our Debian/Ubuntu distribution only by using our server, it permits to save time and bandwidth. Also our configuration permit us to 
+	regulate the connection to our server, and make him robust.
