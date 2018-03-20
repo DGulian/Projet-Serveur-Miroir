@@ -1,0 +1,27 @@
+Passage Mercredi 28 a 15h
+
+(a)Introduction
+--> presentation of the problem, motivate the audience.
+	
+	Debian/Ubuntu mirror == permit to install multiple systems in your local network 
+				because then all needed packages can be downlaoded over the lan connection, thus saving internet bandwidth.
+
+	IT department use mainly Debian & Ubuntu distribution, a server mirror on our LAN network may save our bandwidth and help to manage the network.
+
+(b)Method
+--> approach and the caveats.
+	
+	At beginning, we wanted to use apt-mirror to setup the mirrors and supervise them with cacti/weathermap.
+	During some months we encount some bugs, errors and dysfunctions with the plugins cacti & weathermap. 
+	So we choose to use CentreonOS to supervise and monitor our setup. Easier, more ergonomic and more attractiv, it permit to show us graph, and real-time data
+	on the servers.
+
+	apt-mirror is a simple tools that setup an information system as a server mirror. Basically, I juse have to fill in some configuration file to say which
+	version of Ubuntu or Debian i want to mirrored. Also i can explain when i want to update my mirror, see logs and all the salient informations.
+	It is a tool that regroup all the basicals functions that we needed to build up our servers.
+
+(c)Result
+--> brief summary of your main result
+	
+	Today, our servers run properly, they are monitored and supervised by our CentreonOS. 
+	at last, I have got a last errors on the server that makes association with client by command prompt impossible.
