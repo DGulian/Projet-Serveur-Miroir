@@ -3,34 +3,32 @@ Passage Mercredi 28 a 15h
 (a)Introduction
 --> presentation of the problem, motivate the audience.
 	
-	Debian/Ubuntu mirror == permit to install multiple systems in your local network 
-				because then all needed packages can be downlaoded over the lan connection, thus saving internet bandwidth.
+	Debian/Ubuntu mirror == Allow to install multiple systems in your local network because then all needed packages can be downlaoded over the lan connection, thus saving internet bandwidth.
 
 	IT department use mainly Debian & Ubuntu distribution, a server mirror on our LAN network may save our bandwidth and help to manage the network.
 
 (b)Method
 --> approach and the caveats.
 	
-	At beginning, we wanted to use apt-mirror to setup the mirrors and supervise them with cacti/weathermap.
-	During some months we encount some bugs, errors and dysfunctions with the plugins cacti & weathermap. 
+	At first , we wanted to use apt-mirror to setup the mirrors and supervise them with cacti/weathermap.
+	During some months we encountered some bugs, errors and dysfunctions with the weathermap plugin . 
 	So we choose to use CentreonOS to supervise and monitor our setup. Easier, more ergonomic and more attractiv, it permit to show us graph, and real-time data
 	on the servers.
 
-	apt-mirror is a simple tools that setup an information system as a server mirror. Basically, I juse have to fill in some configuration file to say which
-	version of Ubuntu or Debian i want to mirrored. Also i can explain when i want to update my mirror, see logs and all the salient informations.
+	apt-mirror is a simple tool that setup an information system as a server mirror. Basically, I juse have to fill in some configuration file to say which version of Ubuntu or Debian i want to be mirrored. Also I can decide  when I want to update my mirror, see logs and all the salient informations.
 	It is a tool that regroup all the basicals functions that we needed to build up our servers.
 
 (c)Result
 --> brief summary of your main result
 	
 	Today, our servers run properly, they are monitored and supervised by our CentreonOS. 
-	at last, I have got a last errors on the server that makes association with client by command prompt impossible.
+	at last, I have got no errors on the server that makes association with client by command prompt impossible.
 	It possible to download graphically some packet thanks to our web server on our server mirror [192.168.30.30 -- 192.168.30.91]
 
 (d)Conclusion/Summary
 --> condense your result and implications
 	
-	Thanks to this project we could express our skills and habilities acquired during 2 years at the IUT.
+	Thanks to this project we could express our skills and habilities acquired during the 2 years we spent in the IUT 
 	Networks management, Network supervision, building up server, and Moniroting.
-	Nowaday we can update our Debian/Ubuntu distribution only by using our server, it permits to save time and bandwidth. Also our configuration permit us to 
+	Nowadays we can update our Debian/Ubuntu distribution only by using our server, it permits to save time and bandwidth. Also our configuration permit us to 
 	regulate the connection to our server, and make him robust.
