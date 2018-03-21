@@ -15,7 +15,7 @@ Passage Mercredi 28 a 15h
 	So we choose to use CentreonOS to supervise and monitor our setup. Easier, more ergonomic and more attractiv, it permit to show us graph, and real-time data
 	on the servers.
 
-	apt-mirror is a simple tool that setup an information system as a server mirror. Basically, I juse have to fill in some configuration file to say which version of Ubuntu or Debian i want to be mirrored. Also I can decide  when I want to update my mirror, see logs and all the salient informations.
+	apt-mirror is a simple tool that setup an information system as a server mirror. Basically, I juse have to fill in some configuration file to say which version of Ubuntu or Debian I want to be mirrored. Also I can decide  when I want to update my mirror, see logs and all the salient informations.
 	It is a tool that regroup all the basicals functions that we needed to build up our servers.
 
 (c)Result
