@@ -1,0 +1,114 @@
+| Création d'un miroir Local Debian/Ubuntu |
+ ------------------------------------------
+	INSTALLATION D'APT-MIRROR
+	 -----------------------
+
+root@RT-PT-MIROIR-UBUNTU:/etc/apt# apt-get update && upgrade -y
+root@RT-PT-MIROIR-UBUNTU:/etc/apt# apt-get apt-mirror
+
+	INSTALLATION APACHE2
+	 ------------------
+
+root@RT-PT-MIROIR-UBUNTU:/etc/apt# apt-get install apache2
+
+	CREATION DE L'ARBORESCENCE
+	 ------------------------
+
+root@RT-PT-MIROIR-UBUNTU:/home/rt# mkdir depot					#C'est dans ce répertoire "depot" que nous allons télécharger les paquets du miroir
+
+
+
+
+
+
+
+	CONFIGURATION
+	 -----------
+
+L'ensemble de la configuration se fait dans le fichier /etc/apt/mirror.list
+Ici le fichier de configuration du serveur Debian.
+
+--------------------------------------------------------------------------------
+
+root@RT-PT-MIROIR-DEBIAN:/var/spool/apt-mirror/var# cat /etc/apt/mirror.list
+
+############# config ##################
+#
+ set base_path    /home/rt/depot
+#
+ set mirror_path  $base_path/mirror
+ set skel_path    $base_path/skel
+ set var_path     $base_path/var
+ set cleanscript $var_path/clean.sh
+ set defaultarch  <running host architecture>
+ set postmirror_script $var_path/postmirror.sh
+ set run_postmirror 0
+set nthreads     20
+set _tilde 0
+#
+############# end config ##############
+
+
+
+# Debian Jessie, dépôt principal
+deb http://deb.debian.org/debian/ jessie main
+# Debian Jessie, mises à jour de sécurité
+deb http://security.debian.org/ jessie/updates main
+# Debian Jessie, mises à jour "volatiles"
+deb http://deb.debian.org/debian/ jessie-updates main
+
+# Debian Jessie, dépôt principal + paquets non libres
+deb http://deb.debian.org/debian/ jessie main contrib non-free
+# Debian Jessie, mises à jour de sécurité + paquets non libres
+deb http://security.debian.org/ jessie/updates main contrib non-free
+# Debian Jessie, mises à jour "volatiles" + paquets non libres
+deb http://deb.debian.org/debian/ jessie-updates main contrib non-free
+
+# Debian Jessie, dépôt principal
+deb http://deb.debian.org/debian/ jessie main
+# Debian Jessie, mises à jour de sécurité
+deb http://security.debian.org/ jessie/updates main
+# Debian Jessie, mises à jour "volatiles"
+deb http://deb.debian.org/debian/ jessie-updates main
+# Debian Jessie, dépôt de rétroportages ("backports")
+deb http://deb.debian.org/debian/ jessie-backports main
+
+# Debian Jessie, dépôt principal + paquets non libres
+deb http://deb.debian.org/debian/ jessie main contrib non-free
+# Debian Jessie, mises à jour de sécurité + paquets non libres
+deb http://security.debian.org/ jessie/updates main contrib non-free
+# Debian Jessie, mises à jour "volatiles" + paquets non libres
+deb http://deb.debian.org/debian/ jessie-updates main contrib non-free
+# Debian Jessie, dépôt de rétroportages ("backports")
+deb http://deb.debian.org/debian/ jessie-backports main contrib non-free
+
+# Depot a nettoyer -> suppression des paquets obsolètes
+clean http://deb.debian.org/debian
+clean http://security.debian.org/
+
+--------------------------------------------------------------------------------
+
+A ce stade, il est désormais possible de commencer le téléchargements des paquets.
+	
+
+	TELECHARGEMENT DES PAQUETS
+	 ------------------------
+
+/!\ Le premier téléchargement est long (une dizaine d'heure) et peut ralentir votre connexion internet /!\
+
+root@RT-PT-MIROIR-UBUNTU:/home/rt# apt-mirror /etc/apt/mirror.list 					#Il faut etre patient
+
+A la fin du téléchargement les paquets sont répliqués. Nous devons créer des liens symboliques vers /var/www afin que les clients puissent récupérer les paquets.
+
+root@RT-PT-MIROIR-UBUNTU:/home/rt# ln -s /depot/mirror/"le_depot" /var/www/"la_destination_du_depot"
+
+
+	AUTOMATISER LA MISE A JOUR DES PAQUETS
+	 ------------------------------------
+
+Pour ce faire, la table "cron" est l'idéal. Elle permet d'automatiser le lancement d'apt-mirror hebdomadairement, mensuellement etc.
+	
+root@RT-PT-MIROIR-UBUNTU:/home/rt# crontab -e
+
+# A ajouter a la fin du ficher, pour lancer apt-mirror a 12h00 tout les 6e jours de la semaine
+0 12 * * 6 root /usr/bin/apt-mirror
