@@ -1,0 +1,15 @@
+Au sein du département Réseau & Télécommunication, de l'IUT de Terre-Sainte, sur l'Ile de la réunion, que l'on soit étudiant,
+professeur ou intervenant externe, la question de l'optimisation du temps et des ressources disponibles est omniprésente.
+C'est dans cet axe de pensée que s'inscrit notre projet. La mise en place d'un serveur miroir nous a amené a nous poser 
+différentes question, notamment par rapport à l'économie de temps et de bande passante de notre réseau.
+
+Au cours de notre formation, les système d'exploitation Debian & Ubuntu ont pris une place conséquente. En effet ces systèmes
+très modelables sont facilement personnalisable et nous permettent de réaliser nos différents projet et cours. 
+
+Pourtant, la simple commande "apt-get update" peut s'avérer des fois couteuse en temps et en bande passante. 
+
+Viens alors notre projet : Mise en place d'un Serveur Miroir Debian & Ubuntu.
+
+Un serveur qui va regroupé les paquets de ces 2 systèmes, localement, et qui va ainsi permettre une mise a jour et une installation
+des différents utilitaires, en sauvegardant la bande passante, en gardant uniquement des flux internes, et en optimisant le débit
+de téléchargement.
