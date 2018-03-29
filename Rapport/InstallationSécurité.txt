@@ -1,0 +1,27 @@
+Installation : 
+	Parmis les outils à notre disposition pour mettre en place ces 2 serveurs, j'ai choisi d'utiliser "apt-mirror". Comparé a son homologue "deb-mirror", "apt-mirror" est bien plus autonomone, gestion des logs, purge des fichiers obsolètes à chaque mise à jour, et possibilité de le lié avec un script "postmirror" intégré permettant de personnalisé son miroir.
+La première étape de l'installation consiste à créer un dossier hote qui regroupera toutes les fichiers (index, Release.gpg, paquets etc...) téléchargé par notre miroir. Afin de rendre la maintenance de nos serveurs plus ergonomique, j'ai créé un dossier depot dans le dossier user de notre serveur. 
+Le fichier de configuration d'apt-mirror se trouve dans /etc/apt/apt-mirror et se nomme mirror.list. Voici l'extrait qui sert de configuration à notre système Debian :
+
+				< Insérer Screenshot mirror.list >
+
+Nous renseignons ici le base_path (dossier de base) de notre configuration, et laissons les autres paramètres par défauts.
+Sous la configuration, nous renseignons les sources de notre miroir, c'est à dire les dépôts officiels qui seront dupliqués.
+
+				< Insérer Screenshot dépot mirror.list >
+
+Après avoir installer & configurer notre outils, nous pouvons nous lancer dans l'étape de duplication (téléchargement) des paquets des dépôts sources.
+La première réalisation de cette étape est assez longue (Une dizaine d'heure au total), mais étant donné qu'apt-mirror supprime uniquement les paquets obsolètes via le script clean, les prochaines utilisations seront plus rapides.
+Après avoir été suffisamment patient, nous pouvons voir les arborescence téléchargé dans notre base_path. Nous voyons alors que chaque dépot est présent, et qu'il est composé d'un dossier "dists" ainsi qu'un dossier "pool"
+	- dist : Il contient les Release, Release.gpg ainsi que les sources pour architecure 64 ou 32 bits
+	- pool : Il contient l'ensemble des paquets dupliqués, c'est ici que les clients seront pointés pour télécharger les paquets demandés.
+Après toutes ces étapes, nos serveur ne sont pas encore utilisable. En effet, nos miroir ne sont pas encore disponible à travers le réseau local du département Réseaux & Télécommunications. 
+Pour rendre notre serveur disponible aux utilisateurs du réseau local, un simple serveur web nous suffit. Nous avons décidé d'utiliser apache2, bien qu'un serveur python est une solution viable, nous avons préféré utiliser un outils dont nous avions déjà les bases. 
+La procédure est relativement simple, l'installation d'apache2 se fait en une ligne. Enfin, il suffit de créer un lien symbolique pour que notre dépôt soit accessible via le serveur web. Le bon fonctionnement de nos serveur se test en se rendant, via un navigateur web, sur l'adresse IP de notre dépot.
+
+Avant de rédiger un tutoriel nous avons rencontrés plusieurs erreurs, basé notamment sur des dépots sources obsolètes ou inadaptés. Comme vous pouvez le voir, nous avons alors opté pour le serveur ftp anglais officiel(uk pour United Kingdom) comme source. Ce serveur étant régulièremment mis à jour (4 fois par jour) il nous parait etre un choix judicieux. 
+La mise en place d'un serveur web pour rendre accessible nos serveurs impliquent une partie sécurité à mettre en place. Pour ce faire nous avons réalisé quelques recherches et avons découverts 2 outils permettant de sauvegarder la disponibilite et la sécurité de nos serveurs.
+RkHunter et Fail2Ban sont des utilitaires, légers mais fiables. 
+	- Rkhunter :  Pour Rootkit Hunter, est un programme qui essaye de détecter les rootkits, portes dérobées et exploits. Pour cela, il compare le hash SHA256 des fichiers importants avec les hash connus, qui sont accessibles à partir d'une base de données en ligne. Il alerte également l'utilisateur lorsqu'il trouve des permissions qu'il juge anormales, des fichiers cachés, des chaînes suspectes dans le kernel etc.
+	- Fail2Ban : Est une application qui analyse les logs de divers services (SSH, Apache, FTP…) en cherchant des correspondance entre des motifs définis dans ses filtres et les entrées des logs. Typiquement, fail2ban cherche des tentatives répétées de connexions infructueuses dans les fichiers journaux et procède à un bannissement en ajoutant une règle au pare-feu iptables pour bannir l'adresse IP de la source.
+En plus de ces utilitaires, nous avons ajoutés des règles iptables. Netfilter est un élément implanté profondément dans le kernel Linux, il est donc une couche de sécurité que l'on ne peut oublié. Nous avons analysé quels étaient les principales surfaces d'attaques présentes d'attaques, et nous avons écrites différentes règles Iptables afin de renforcé la sécurité. Entre autre limité le burst de requête ICMP (ping), le burst de paquet TCP/SYN et limité le scan des ports ouverts à un par jour, le tout uniquement grâce à Iptable.

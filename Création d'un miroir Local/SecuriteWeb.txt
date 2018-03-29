@@ -57,3 +57,22 @@ Ici, les logs importans a observer :
 
 /var/log/fail2ban.log : log d'alerte de fail2ban [cat /var/log/fail2ban | grep ban ]
 /var/log/rkhunter : log quotidien de rkhunter, comme dis plus haut analysé critiquemment les erreurs.
+
+
+
+
+	IPTABLES 
+	 ------	
+
+/sbin/iptables -A INPUT -p tcp --syn -m limit --limit 2/s --limit-burst 30 -j ACCEPT
+
+La commande accepte 30 connexion avant d’appliquer la limite dure de 2 connexions maximum par secondes. Au delà de ce seuil la réponse renvoyée sera un timeout.
+
+ /sbin/iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
+
+La commande applique directement la limite dure d’une requête icmp par seconde. Au delà de ce seuil la réponse renvoyée sera un timeout.
+
+/sbin/iptables -A INPUT -p tcp --tcp-flags ALL NONE -m limit --limit 1/h -j ACCEPT
+/sbin/iptables -A INPUT -p tcp --tcp-flags ALL ALL -m limit --limit 1/h -j ACCEPT
+
+Les commandes appliquent directement les limites dures d’une requête par heure pour empêcher l’attaquant de détecter vos ports ouverts.
