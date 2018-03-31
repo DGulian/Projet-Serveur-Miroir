@@ -1,0 +1,20 @@
+	CONFIGURATION DU CLIENT
+	 ---------------------
+
+Pour mettre à jour un client, Debian ou Ubuntu, à l'aide du dépôt local, il suffit de modifier le fichier /etc/apt/sources.list du client.
+Pour un client Debian, il suffit d'éditer le fichier /etc/apt/sources.list et y ajouter les lignes suivantes : 
+
+deb http://192.168.30.30/debian	stretch main contrib non-free
+deb http://192.168.30.30/debian	stretch-backports main contrib non-free
+deb http://192.168.30.30/debian	stretch-proposed-updates main contrib non-free
+deb http://192.168.30.30/debian	stretch-updates main contrib non-free
+
+Puis enregistrer les modifications.
+
+Pour prendre en compte les changements effectués, lancer la commande :
+
+root@RT-PT-MIROIR-DEBIAN:apt-get update
+
+Pour installer une application, lancer la commande : 
+
+root@RT-PT-MIROIR-DEBIAN:apt-get install "le paquet voulu"
