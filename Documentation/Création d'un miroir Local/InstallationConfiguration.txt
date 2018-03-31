@@ -18,10 +18,6 @@ root@RT-PT-MIROIR-UBUNTU:/home/rt# mkdir depot					#C'est dans ce répertoire "de
 
 
 
-
-
-
-
 	CONFIGURATION
 	 -----------
 
@@ -48,44 +44,17 @@ set _tilde 0
 #
 ############# end config ##############
 
+deb-amd64 http://ftp.uk.debian.org/debian stretch main contrib non-free
+deb-amd64 http://ftp.uk.debian.org/debian stretch-backports main contrib non-free
+deb-amd64 http://ftp.uk.debian.org/debian stretch-updates main contrib non-free
+deb-amd64 http://ftp.uk.debian.org/debian stretch-proposed-updates main contrib non-free
 
+deb-i386 http://ftp.uk.debian.org/debian stretch main contrib non-free
+deb-i386 http://ftp.uk.debian.org/debian stretch-backports main contrib non-free
+deb-i386 http://ftp.uk.debian.org/debian stretch-updates main contrib non-free
+deb-i386 http://ftp.uk.debian.org/debian stretch-proposed updates main contrib non-free
 
-# Debian Jessie, dépôt principal
-deb http://deb.debian.org/debian/ jessie main
-# Debian Jessie, mises à jour de sécurité
-deb http://security.debian.org/ jessie/updates main
-# Debian Jessie, mises à jour "volatiles"
-deb http://deb.debian.org/debian/ jessie-updates main
-
-# Debian Jessie, dépôt principal + paquets non libres
-deb http://deb.debian.org/debian/ jessie main contrib non-free
-# Debian Jessie, mises à jour de sécurité + paquets non libres
-deb http://security.debian.org/ jessie/updates main contrib non-free
-# Debian Jessie, mises à jour "volatiles" + paquets non libres
-deb http://deb.debian.org/debian/ jessie-updates main contrib non-free
-
-# Debian Jessie, dépôt principal
-deb http://deb.debian.org/debian/ jessie main
-# Debian Jessie, mises à jour de sécurité
-deb http://security.debian.org/ jessie/updates main
-# Debian Jessie, mises à jour "volatiles"
-deb http://deb.debian.org/debian/ jessie-updates main
-# Debian Jessie, dépôt de rétroportages ("backports")
-deb http://deb.debian.org/debian/ jessie-backports main
-
-# Debian Jessie, dépôt principal + paquets non libres
-deb http://deb.debian.org/debian/ jessie main contrib non-free
-# Debian Jessie, mises à jour de sécurité + paquets non libres
-deb http://security.debian.org/ jessie/updates main contrib non-free
-# Debian Jessie, mises à jour "volatiles" + paquets non libres
-deb http://deb.debian.org/debian/ jessie-updates main contrib non-free
-# Debian Jessie, dépôt de rétroportages ("backports")
-deb http://deb.debian.org/debian/ jessie-backports main contrib non-free
-
-# Depot a nettoyer -> suppression des paquets obsolètes
-clean http://deb.debian.org/debian
-clean http://security.debian.org/
-
+clean http://ftp.uk.debian.org/debian
 --------------------------------------------------------------------------------
 
 A ce stade, il est désormais possible de commencer le téléchargements des paquets.
@@ -96,11 +65,11 @@ A ce stade, il est désormais possible de commencer le téléchargements des paquet
 
 /!\ Le premier téléchargement est long (une dizaine d'heure) et peut ralentir votre connexion internet /!\
 
-root@RT-PT-MIROIR-UBUNTU:/home/rt# apt-mirror /etc/apt/mirror.list 					#Il faut etre patient
+root@RT-PT-MIROIR-UBUNTU:/home/rt# apt-mirror 					#Il faut etre patient
 
 A la fin du téléchargement les paquets sont répliqués. Nous devons créer des liens symboliques vers /var/www afin que les clients puissent récupérer les paquets.
 
-root@RT-PT-MIROIR-UBUNTU:/home/rt# ln -s /depot/mirror/"le_depot" /var/www/"la_destination_du_depot"
+root@RT-PT-MIROIR-UBUNTU:/home/rt# ln -s /depot/mirror/"le_depot" /var/www
 
 
 	AUTOMATISER LA MISE A JOUR DES PAQUETS
@@ -112,3 +81,12 @@ root@RT-PT-MIROIR-UBUNTU:/home/rt# crontab -e
 
 # A ajouter a la fin du ficher, pour lancer apt-mirror a 12h00 tout les 6e jours de la semaine
 0 12 * * 6 root /usr/bin/apt-mirror
+
+
+	
+
+
+
+
+
+
