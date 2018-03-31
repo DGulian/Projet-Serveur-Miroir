@@ -1,0 +1,59 @@
+| Securite du serveur Web|
+
+	FAIL2BAN
+	 ------
+Les ports ouverts sur le serveur web sont sans grande protection, et sujet a des attaques simples (connexion via brute-force; déni de service ; etc ) 
+Fail2ban est un utilitaire qui se base sur les logs afin de répéré des actions suspectes répétés dans un laps de temps donnée.
+Il offre une protection contre les attaques basiques.
+
+Installation
+
+root@RT-PT-MIROIR-DEBIAN:/home/rt# apt-get install fail2ban
+
+
+Pour configurer les règles de sécurité, il faut se rendre dans le fichier de configuration de fail2ban
+
+root@RT-PT-MIROIR-DEBIAN:/home/rt# vi /etc/fail2ban/jail.conf
+
+Les différents champs remplis : 
+- destemail : une adresse mail qui recevra les mails d'alerte de fail2ban
+- bantime : temps de bannissement (si bannissement il y a) des adresses IP
+- maxretry : nombre de tentavis de connexion permise avant bannissement
+
+Après avoir modifier la configuration, veillez a bien recharger la nouvelle configuration
+
+root@RT-PT-MIROIR-DEBIAN:/home/rt# /etc/init.d/fail2ban restart
+
+
+
+
+	RKHUNTER
+	 ------
+Rkhunter est un utilitaire permettant de détecter d'éventuels rootkits(backdoor dissimulé), exécuté quotidiennement, il avertit les administrateurs
+
+Installation 
+
+root@RT-PT-MIROIR-DEBIAN:/home/rt# apt-get install rkhunter
+
+
+Pour le configurer, il faut se rendre dans son fichier de configurer
+
+root@RT-PT-MIROIR-DEBIAN:/home/rt# vi /etc/default/rkhunter
+
+Les différents champs remplis : 
+
+- REPORT_EMAIL : l'adresse mail qui recevra les alertes de Rkhunter
+- CRON_DAILY_RUN : yes --> pour une vérification quotidien de la machine via la table cron
+
+A noter que Rkhunter peut parfois déclarer des fichiers sains comme étant infectés ("faux positifs"). Une analyse critique des avertissement est donc nécessaire.
+Cependant, si l'alerte est justifiée cela signifie qu'un rootkit ainsi qu'une faille de sécurité exploitable est présente sur le système.
+
+
+	SURVEILLANCE DES LOGS 
+	 -------------------
+Les utilitaires ci-dessus enverronts des notifications par mail en cas d'alerte.
+Cependant, la surveillance des logs est d'une importance capital, car ils reflètent la vie du serveur.
+Ici, les logs importans a observer : 
+
+/var/log/fail2ban.log : log d'alerte de fail2ban [cat /var/log/fail2ban | grep ban ]
+/var/log/rkhunter : log quotidien de rkhunter, comme dis plus haut analysé critiquemment les erreurs.
